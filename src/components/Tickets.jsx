@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Ticket.css";
 import jwt_decode from "jwt-decode"; // ONLY this line // for ESM style // ✅ Vite fix
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const Tickets = ({ logo }) => {
   const [tickets, setTickets] = useState([]);
