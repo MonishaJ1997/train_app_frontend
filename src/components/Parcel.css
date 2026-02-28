@@ -1,0 +1,159 @@
+/* PAGE */
+.parcel-page {
+  padding: 40px 20px;
+  background: linear-gradient(to right, #eef2f7, #f8fafc);
+  min-height: 100vh;
+  margin-top: 100px;
+}
+
+/* HEADER */
+.parcel-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.parcel-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.parcel-header p {
+  color: #64748b;
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+/* MAIN CARD */
+.parcel-card {
+  background: #ffffff;
+  padding: 30px;
+  max-width: 650px;
+  margin: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.parcel-card:hover {
+  transform: translateY(-3px);
+}
+
+/* TRACK BOX */
+.track-box {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.track-box input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.track-box input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.track-box button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.track-box button:hover {
+  transform: scale(1.05);
+}
+
+/* RESULT CARD */
+.parcel-result {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  border-left: 5px solid #22c55e;
+}
+
+.parcel-result h3 {
+  color: #16a34a;
+  margin-bottom: 10px;
+}
+
+.parcel-result p {
+  margin: 5px 0;
+  color: #334155;
+}
+
+/* INFO SECTION */
+.parcel-info {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.parcel-info h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #1e293b;
+}
+
+/* GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  padding: 0 10px;
+}
+
+/* CARD */
+.info-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+  text-align: left;
+  position: relative;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ICON STYLE */
+.info-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.info-card p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .track-box {
+    flex-direction: column;
+  }
+
+  .track-box button {
+    width: 100%;
+  }
+
+  .parcel-card {
+    padding: 20px;
+  }
+}

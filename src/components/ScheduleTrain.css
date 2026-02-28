@@ -1,0 +1,77 @@
+/* Page */
+.schedule-train-page {
+  width: 100%;
+ 
+}
+
+/* HERO SECTION */
+.schedule-hero {
+  background: #0077c3;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.schedule-hero h1 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #222;
+}
+
+/* SEARCH BAR */
+.search-box {
+  display: flex;
+  justify-content: center;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 18px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background: #eee;
+}
+
+.search-box button {
+  padding: 18px 25px;
+  background: #43a047;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  background: #2e7d32;
+}
+
+/* INFO SECTION */
+.info-section {
+  padding: 40px 20px;
+  background: #f5f5f5;
+}
+
+.info-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.info-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}

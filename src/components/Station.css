@@ -1,0 +1,134 @@
+/* PAGE */
+.station-container {
+  display: flex;
+  height: 100vh;
+  background: #f4f6fb;
+  
+}
+
+/* LEFT PANEL */
+.station-left {
+  width: 30%;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.station-left h2 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+/* SEARCH */
+.station-left input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+
+.station-left input:focus {
+  border-color: #3498db;
+}
+
+/* LIST */
+.station-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.station-item {
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.station-item:hover {
+  background: #f1f7ff;
+}
+
+.station-item.active {
+  background: #3498db;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* RIGHT PANEL */
+.station-right {
+  width: 70%;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+/* IMAGE */
+.station-right img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* DETAILS */
+.station-details {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.station-details h2 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+/* DESCRIPTION */
+.station-details p {
+  margin: 8px 0;
+  color: #555;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* LABELS */
+.station-details strong {
+  color: #2c3e50;
+}
+
+/* SCROLLBAR */
+.station-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.station-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .station-container {
+    flex-direction: column;
+  }
+
+  .station-left {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .station-right {
+    width: 100%;
+  }
+
+  .station-right img {
+    height: 220px;
+  }
+}

@@ -1,0 +1,155 @@
+/* OVERLAY */
+/* OVERLAY */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end; /* keeps panel on right side */
+}
+
+/* RIGHT SIDE PANEL */
+.login-container {
+  width: 350px;
+  height: 100%;
+  background: white;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+
+  animation: slideIn 0.3s ease;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* SLIDE IN ANIMATION */
+@keyframes slideIn {
+  from {
+    right: -400px;
+  }
+  to {
+    right: 0;
+  }
+}
+
+/* 🔷 TOP IMAGE LOGO */
+.top-image {
+  display: flex;
+  justify-content: center; /* centers logo horizontally */
+  margin-bottom: 20px;
+}
+
+.top-image img {
+  width: 120px; /* adjust as needed */
+  object-fit: contain;
+}
+
+/* INPUTS */
+.login-container input {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #ddd;
+}
+
+/* FORGOT PASSWORD LINK */
+.forgot {
+  text-align: right;
+  color: #0076CB;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* BUTTONS (LOGIN & REGISTER) */
+.login-btn-main {
+  background: #0076CB; /* blue color */
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn-main:hover {
+  background: #005fa3; /* darker blue on hover */
+}
+
+/* SWITCH TEXT (Login ↔ Sign Up) */
+.switch-text {
+  text-align: center;
+  font-size: 14px;
+}
+
+.link-text {
+  color: #0076CB;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* RESET PASSWORD TEXT */
+.reset-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+
+
+
+/* SERVICES SECTION */
+.services-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  background: #f2f2f2;
+  flex-wrap: nowrap; /* Keep in single line */
+}
+
+.service-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.service-item i {
+  font-size: 32px;
+  color: #187bff; /* Blue color */
+  background: #e6f0ff;
+  padding: 20px;
+  border-radius: 50%;
+  transition: 0.3s ease;
+}
+
+.service-item p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #187bff; /* Blue text */
+}
+
+/* Hover effect */
+.service-item:hover i {
+  background: #187bff;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .services-container {
+    overflow-x: auto; /* Scroll on mobile */
+    gap: 20px;
+  }
+
+  .service-item i {
+    font-size: 26px;
+    padding: 15px;
+  }
+}

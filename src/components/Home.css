@@ -1,0 +1,375 @@
+/* ================= RESET ================= */
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  cursor:pointer;
+}
+
+/* ================= MAIN CONTAINER ================= */
+
+.home-container {
+  width: 100%;
+  position: relative;
+  
+}
+
+/* ================= HERO SECTION ================= */
+
+.hero-section {
+  width: 100%;
+  height: 80vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* DARK OVERLAY */
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+ /* background: rgba(0, 0, 0, 0.35);*/
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* ================= BOOKING CARD (LEFT OVERLAY) ================= */
+
+.booking-card {
+  position: relative;
+  z-index: 2;
+  width: 380px;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  margin-left: 80px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.booking-card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: white;
+  background-color: #0076CB;
+}
+
+.booking-card input,
+.booking-card select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.booking-card input:focus,
+.booking-card select:focus {
+  border-color: #0076CB;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.book-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.book-btn:hover {
+  background: #e65c00;
+  transform: translateY(-2px);
+}
+
+/* ================= SERVICES SECTION ================= */
+
+.services-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 150px;
+  padding: 40px 20px;
+
+}
+
+.services-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  
+  
+}
+
+.services-item i {
+  font-size: 26px;
+  color: #0077cb;
+  background: #e6f2fb;   /* light blue circle */
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;    /* makes circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.services-item p {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.services-item:hover {
+  transform: translateY(-5px);
+}
+.services-item i:hover{
+  color: white;
+  background-color: #0077cb;
+}
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+  .hero-section {
+    justify-content: center;
+  }
+
+  .booking-card {
+    margin-left: 0;
+    width: 90%;
+  }
+}
+
+
+.banner-container {
+  width: 100%;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+
+.package-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  flex-wrap: wrap;
+  background-color: #f5f5f5;
+}
+
+.package-card {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.package-card:hover {
+  transform: translateY(-8px);
+}
+
+.package-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.package-content {
+  padding: 20px;
+}
+
+.package-content h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.package-content p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.package-content button {
+  background-color: #002f6c;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.package-content button:hover {
+  background-color: #0047ab;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 992px) {
+
+  /* HERO */
+  .hero-section {
+    height: auto;
+    padding: 40px 0;
+    justify-content: center;
+  }
+
+  .booking-card {
+    margin-left: 0;
+    width: 85%;
+  }
+
+  /* SERVICES */
+  .services-container {
+    gap: 60px;
+  }
+
+  /* PACKAGE */
+  .package-card {
+    width: 45%;
+  }
+
+  .package-content h2 {
+    font-size: 22px;
+  }
+
+  .package-content p {
+    font-size: 14px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero-section {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .booking-card {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .booking-card h2 {
+    font-size: 18px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  /* SERVICES */
+  .services-container {
+    gap: 25px;
+    padding: 20px;
+  }
+
+  .services-item i {
+    width: 55px;
+    height: 55px;
+    font-size: 20px;
+  }
+
+  .services-item p {
+    font-size: 14px;
+  }
+
+  /* BANNER */
+  .banner-image {
+    height: 80px;
+  }
+
+  /* PACKAGE */
+  .package-container {
+    padding: 20px;
+  }
+
+  .package-card {
+    width: 100%;
+  }
+
+  .package-card img {
+    height: 180px;
+  }
+
+  .package-content h2 {
+    font-size: 20px;
+  }
+
+  .package-content p {
+    font-size: 14px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+
+  .booking-card {
+    padding: 15px;
+  }
+
+  .booking-card input,
+  .booking-card select {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .book-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .services-item i {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .services-item p {
+    font-size: 13px;
+  }
+
+  .package-content h2 {
+    font-size: 18px;
+  }
+
+  .package-content p {
+    font-size: 13px;
+  }
+}

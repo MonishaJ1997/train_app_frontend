@@ -1,0 +1,225 @@
+/* ================= MAIN CONTAINER ================= */
+/* ================= Booking Page ================= */
+.booking-page {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fdfdfd;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+  
+}
+
+/* Headings */
+.booking-page h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.booking-page p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Passenger Section */
+.passenger-section {
+  margin-top: 20px;
+}
+
+.passenger-section h3 {
+  margin-bottom: 10px;
+}
+
+.passenger-card {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.passenger-card input[type="text"],
+.passenger-card input[type="number"] {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.remove-btn {
+  padding: 8px 12px;
+  background: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #e60000;
+}
+
+.add-passenger-btn {
+  padding: 10px 15px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-passenger-btn:hover {
+  background: #45a049;
+}
+
+/* Contact Section */
+.contact-section {
+  margin-top: 20px;
+}
+
+.contact-section h3 {
+  margin-bottom: 10px;
+}
+
+.contact-section input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Options Section */
+.options-section {
+  margin-top: 15px;
+}
+
+.options-section label {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Total Amount */
+.total-section {
+  margin-top: 20px;
+  background: #e6f7ff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0050b3;
+}
+
+/* Book Button */
+.book-btn-section {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.book-btned {
+  background: #1890ff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book-btned:hover {
+  background: #096dd9;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 992px) {
+
+  .booking-page {
+    max-width: 95%;
+    padding: 18px;
+    margin-top: 130px;
+  }
+
+  .booking-page h2 {
+    font-size: 22px;
+  }
+
+  .total-section {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .book-btned {
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+}
+
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .booking-page {
+    max-width: 90%;
+    padding: 15px;
+    margin-top: 120px;
+    border-radius: 8px;
+  }
+
+  /* Passenger layout fix */
+  .passenger-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .passenger-card input {
+    width: 100%;
+  }
+
+  .remove-btn {
+    width: 100%;
+  }
+
+  .add-passenger-btn {
+    width: 100%;
+  }
+
+  .contact-section input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .total-section {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .book-btned {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+
+
+/* ================= PAYMENT MODAL FIX ================= */
+@media (max-width: 768px) {
+
+  .payment-modal {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 10px;
+  }
+
+  .close-btn {
+    font-size: 16px;
+    top: 10px;
+    right: 10px;
+  }
+}

@@ -1,0 +1,123 @@
+.payment-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+.payment-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.payment-card h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1a73e8;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.payment-form input,
+.payment-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-element-wrapper {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.payment-form button {
+  background-color: #00a859;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.payment-form button:hover {
+  background-color: #008c45;
+}
+
+.payment-form button:disabled {
+  background-color: #9dd1b7;
+  cursor: not-allowed;
+}
+
+.secure-info {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #777;
+}
+.payment-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999999; /* 🔥 very high to stay on top */
+}
+
+/* Modal box */
+.payment-modal {
+  background: #fff;
+  width: 500px;
+  max-width: 95%;
+
+  border-radius: 12px;
+  padding: 20px;
+
+  position: relative;
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+
+  border: none;
+  background: none;
+
+  font-size: 18px;
+  cursor: pointer;
+}

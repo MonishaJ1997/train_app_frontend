@@ -1,0 +1,101 @@
+/* Page background */
+.success-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e6f0ff, #f9fbff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  
+}
+
+/* Ticket card */
+.tickets-card {
+  background: #ffffff;
+  width: 420px;
+  max-width: 95%;
+  border-radius: 16px;
+  padding: 25px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top highlight bar */
+.tickets-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: #4CAF50;
+}
+
+/* Title */
+.tickets-card h2 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+/* Train name */
+.tickets-card h3 {
+  text-align: center;
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Text */
+.tickets-card p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Passenger list */
+.passenger-item {
+  background: #f5f7fa;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* Section titles */
+.tickets-card h4 {
+  margin-top: 10px;
+  color: #444;
+}
+
+/* Divider */
+.tickets-card hr {
+  border: none;
+  border-top: 1px dashed #ccc;
+  margin: 15px 0;
+}
+
+/* Total amount */
+.tickets-card h3:last-of-type {
+  text-align: center;
+  color: #000;
+  margin-top: 15px;
+}
+
+/* Button */
+.tickets-card button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #1976d2;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ticket-card button:hover {
+  background: #125aa0;
+}

@@ -1,0 +1,23 @@
+.banners-slider-container {
+  display: flex;
+  overflow: hidden;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.banners-slider-image {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+}
+
+.banners-slider-image:hover {
+  transform: scale(1.1);
+  border-color: #333;
+}
