@@ -4,7 +4,7 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const Home = () => {
   const navigate = useNavigate();
