@@ -4,7 +4,7 @@ import "./Navbar.css";
 import LoginModal from "./LoginModal";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const Navbar = () => {
   const [logo, setLogo] = useState(null);
