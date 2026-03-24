@@ -6,7 +6,7 @@ const BannerSlider = () => {
   const [sliders, setSliders] = useState([]);
   const [startIndex, setStartIndex] = useState(0); // first visible image
   const visibleCount = 5; // number of images visible at a time
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
   // Fetch slider images from backend
   useEffect(() => {
     axios
