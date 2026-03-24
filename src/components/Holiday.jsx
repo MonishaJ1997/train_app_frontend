@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Holiday.css";
 import BannerSlider from "./BannerSlider";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const Holiday = () => {
   const [banners, setBanners] = useState([]);
