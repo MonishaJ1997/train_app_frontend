@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Schedule.css";
 
 const BASE_URL = "http://127.0.0.1:8000";
 
 const Schedule = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // ✅ initialize navigate
   const [train, setTrain] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +25,20 @@ const Schedule = () => {
 
   return (
     <div className="schedule-page">
+      {/* BACK BUTTON */}
+      <div
+        className="back-btn"
+        onClick={() => navigate(-1)}
+        style={{
+          cursor: "pointer",
+          marginBottom: "20px",
+          color: "black",
+          fontWeight: "bold",
+        }}
+      >
+        ← Back
+      </div>
+
       {/* HEADER */}
       <div className="schedule-header">
         <h2>

@@ -1,155 +1,135 @@
 /* OVERLAY */
-/* OVERLAY */
 .login-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2000;
-  display: flex;
-  justify-content: flex-end; /* keeps panel on right side */
-}
+  background: rgba(0, 0, 0, 0.6);
 
-/* RIGHT SIDE PANEL */
-.login-container {
-  width: 350px;
-  height: 100%;
-  background: white;
-  padding: 30px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  gap: 15px;
+  align-items: center;
 
-  animation: slideIn 0.3s ease;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  z-index: 999;
+  backdrop-filter: blur(4px);
 }
 
-/* SLIDE IN ANIMATION */
-@keyframes slideIn {
+/* CONTAINER */
+.login-container {
+  background: #ffffff;
+  padding: 35px 30px;
+  border-radius: 16px;
+  width: 350px;
+  max-width: 90%;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  position: relative;
+  animation: popup 0.3s ease;
+}
+
+/* POPUP ANIMATION */
+@keyframes popup {
   from {
-    right: -400px;
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
   }
   to {
-    right: 0;
+    transform: translateY(0) scale(1);
+    opacity: 1;
   }
 }
 
-/* 🔷 TOP IMAGE LOGO */
-.top-image {
-  display: flex;
-  justify-content: center; /* centers logo horizontally */
-  margin-bottom: 20px;
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #777;
+  transition: 0.2s;
 }
 
-.top-image img {
-  width: 120px; /* adjust as needed */
-  object-fit: contain;
+.close-btn:hover {
+  color: #000;
+  transform: scale(1.2);
+}
+
+/* TITLE */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #0076cb;
 }
 
 /* INPUTS */
 .login-container input {
-  padding: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+
   border-radius: 8px;
-  border: none;
-  background: #ddd;
-}
+  border: 1px solid #ddd;
 
-/* FORGOT PASSWORD LINK */
-.forgot {
-  text-align: right;
-  color: #0076CB;
   font-size: 14px;
-  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* BUTTONS (LOGIN & REGISTER) */
-.login-btn-main {
-  background: #0076CB; /* blue color */
-  color: white;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.login-container input:focus {
+  border-color: #0076cb;
+  outline: none;
+  box-shadow: 0 0 5px rgba(46,125,50,0.3);
 }
 
-.login-btn-main:hover {
-  background: #005fa3; /* darker blue on hover */
-}
-
-/* SWITCH TEXT (Login ↔ Sign Up) */
-.switch-text {
-  text-align: center;
-  font-size: 14px;
-}
-
-.link-text {
-  color: #0076CB;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* RESET PASSWORD TEXT */
-.reset-text {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-
-
-
-/* SERVICES SECTION */
-.services-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  padding: 40px 20px;
-  background: #f2f2f2;
-  flex-wrap: nowrap; /* Keep in single line */
-}
-
-.service-item {
-  text-align: center;
-  cursor: pointer;
-}
-
-.service-item i {
-  font-size: 32px;
-  color: #187bff; /* Blue color */
-  background: #e6f0ff;
-  padding: 20px;
-  border-radius: 50%;
-  transition: 0.3s ease;
-}
-
-.service-item p {
+/* BUTTON */
+.login-container button {
+  width: 100%;
+  padding: 12px;
   margin-top: 10px;
-  font-size: 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0076cb;
+  color: white;
+
+  font-size: 15px;
   font-weight: 500;
-  color: #187bff; /* Blue text */
+
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Hover effect */
-.service-item:hover i {
-  background: #187bff;
-  color: #fff;
+.login-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(45, 44, 156, 0.4);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .services-container {
-    overflow-x: auto; /* Scroll on mobile */
-    gap: 20px;
-  }
+/* SWITCH TEXT */
+.login-container p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
 
-  .service-item i {
-    font-size: 26px;
-    padding: 15px;
+/* LINK */
+.link-text {
+  color: #0076cb;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 400px) {
+  .login-container {
+    padding: 25px 20px;
   }
 }

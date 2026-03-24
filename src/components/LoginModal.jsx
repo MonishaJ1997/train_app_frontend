@@ -4,189 +4,207 @@ import "./LoginModal.css";
 
 const BASE_URL = "http://127.0.0.1:8000";
 
-const LoginModal = ({ onClose, logo, onLogin }) => {
-  const [view, setView] = useState("login"); // "login" | "register" | "reset"
+const LoginModal = ({ onClose, onLogin }) => {
+  const [view, setView] = useState("login");
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
+    username: "",
     password: "",
+    email: "",
+    phone: "",
   });
 
-  // convert backend-relative logo path to full URL
-  const getImageUrl = (path) => {
-    if (!path) return "";
-    return path.startsWith("http") ? path : `${BASE_URL}${path}`;
-  };
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // 👉 Username only letters
+    if (name === "username") {
+      if (!/^[A-Za-z]*$/.test(value)) return;
+    }
+
+    // 👉 Phone only numbers
+    if (name === "phone") {
+      if (!/^[0-9]*$/.test(value)) return;
+    }
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  // ------------------ REGISTER ------------------
-  const handleRegister = async () => {
-    if (!formData.name || !formData.email || !formData.password) {
-      alert("Please fill all required fields");
-      return;
+  // ================= VALIDATION =================
+  const validate = () => {
+    let newErrors = {};
+
+    if (!formData.username) {
+      newErrors.username = "Username required";
+    } else if (!/^[A-Za-z]+$/.test(formData.username)) {
+      newErrors.username = "Only letters allowed";
     }
 
-    try {
-      const payload = {
-        username: formData.name,  // backend expects username
-        email: formData.email,
-        password: formData.password,
-        phone: formData.phone,
-      };
+    if (view === "register") {
+      if (!formData.email) {
+        newErrors.email = "Email required";
+      } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+        newErrors.email = "Invalid email";
+      }
 
-      const res = await axios.post(`${BASE_URL}/api/register/`, payload);
-      alert(res.data.message || "Registration successful!");
-      setView("login"); // switch to login
-      setFormData({ name: "", phone: "", email: "", password: "" });
-    } catch (error) {
-      console.log(error.response?.data); // debug backend message
-      alert(
-        error.response?.data?.message || "Registration failed or user exists"
-      );
+      if (!formData.phone) {
+  newErrors.phone = "Phone required";
+} else if (!/^[6-9][0-9]{9}$/.test(formData.phone)) {
+  newErrors.phone = "Must start with 6-9 and be 10 digits";
+}
     }
+
+    if (!formData.password) {
+      newErrors.password = "Password required";
+    } else if (formData.password.length < 4) {
+      newErrors.password = "Min 4 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  // ------------------ LOGIN ------------------
-  const handleLogin = async () => {
-    if (!formData.name || !formData.password) {
-      alert("Please enter username and password");
-      return;
-    }
+  // ================= LOGIN =================
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
 
     try {
+      setLoading(true);
+
       const res = await axios.post(`${BASE_URL}/api/login/`, {
-        username: formData.name,
+        username: formData.username,
         password: formData.password,
       });
 
-      // store token and username
-      localStorage.setItem("token", res.data.access);
-      localStorage.setItem("username", formData.name);
+      localStorage.setItem("access", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
+      localStorage.setItem("username", formData.username);
 
-      alert("Login successful");
+      alert("✅ Login successful");
+      onLogin(formData.username);
 
-      if (onLogin) onLogin(formData.name); // notify navbar
-      onClose(); // close modal
-      setFormData({ name: "", phone: "", email: "", password: "" });
-    } catch (error) {
-      console.log(error.response?.data);
-      alert("Invalid username or password");
+    } catch (err) {
+      alert(
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        "❌ Login failed"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= REGISTER =================
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    try {
+      setLoading(true);
+
+      await axios.post(`${BASE_URL}/api/register/`, {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        phone: formData.phone,
+      });
+
+      alert("✅ Registration successful");
+
+      // auto login
+      await handleLogin(e);
+
+    } catch (err) {
+      alert(err.response?.data?.message || "❌ Register failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="login-overlay" onClick={onClose}>
-      <div className="login-container" onClick={(e) => e.stopPropagation()}>
-        {/* Top Image */}
-        <div className="top-image">
-          {logo && <img src={getImageUrl(logo.logo)} alt="logo" />}
-        </div>
+    <div className="login-overlay">
+      <div className="login-container">
 
-        {/* LOGIN VIEW */}
-        {view === "login" && (
-          <>
-            <input
-              name="name"
-              placeholder="Username"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
+        <span className="close-btn" onClick={onClose}>✖</span>
 
-            <p className="forgot" onClick={() => setView("reset")}>
-              Forgot password?
-            </p>
+        <h2>{view === "login" ? "Login" : "Register"}</h2>
 
-            <button onClick={handleLogin} className="login-btn-main">
-              Login
-            </button>
+        <form onSubmit={view === "login" ? handleLogin : handleRegister}>
+          
+          {/* USERNAME */}
+          <input
+            type="text"
+            name="username"
+            placeholder="Username (letters only)"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <small className="error">{errors.username}</small>
 
-            <p className="switch-text">
-              Don't have an account?{" "}
-              <span className="link-text" onClick={() => setView("register")}>
-                Sign Up
-              </span>
-            </p>
-          </>
-        )}
+          {/* REGISTER FIELDS */}
+          {view === "register" && (
+            <>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <small className="error">{errors.email}</small>
 
-        {/* REGISTER VIEW */}
-        {view === "register" && (
-          <>
-            <h3 className="form-title">Create Account</h3>
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone (10 digits)"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <small className="error">{errors.phone}</small>
+            </>
+          )}
 
-            <input
-              name="name"
-              placeholder="Username"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-            <input
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
+          {/* PASSWORD */}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password (min 4 chars)"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <small className="error">{errors.password}</small>
 
-            <button onClick={handleRegister} className="login-btn-main">
-              Create Account
-            </button>
+          <button type="submit">
+            {loading
+              ? "Please wait..."
+              : view === "login"
+              ? "Login"
+              : "Register"}
+          </button>
+        </form>
 
-            <p className="switch-text">
-              Already have an account?{" "}
-              <span className="link-text" onClick={() => setView("login")}>
-                Login
-              </span>
-            </p>
-          </>
-        )}
+        <p>
+          {view === "login"
+            ? "Don't have an account?"
+            : "Already have an account?"}
 
-        {/* RESET PASSWORD VIEW */}
-        {view === "reset" && (
-          <>
-            <h3 className="form-title">Reset Password</h3>
-            <p className="reset-text">Enter your email to reset password</p>
-
-            <input
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-
-            <button className="login-btn-main">Send</button>
-
-            <p className="switch-text">
-              Back to{" "}
-              <span className="link-text" onClick={() => setView("login")}>
-                Login
-              </span>
-            </p>
-          </>
-        )}
+          <span
+            className="link-text"
+            onClick={() =>
+              setView(view === "login" ? "register" : "login")
+            }
+          >
+            {view === "login" ? " Sign Up" : " Login"}
+          </span>
+        </p>
       </div>
     </div>
   );

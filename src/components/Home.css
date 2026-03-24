@@ -250,7 +250,7 @@ body, html, #root {
 
   .booking-card {
     margin-left: 0;
-    width: 85%;
+    width: 100%;
   }
 
   /* SERVICES */
@@ -269,6 +269,9 @@ body, html, #root {
 
   .package-content p {
     font-size: 14px;
+  }
+  .row {
+    flex-direction: column;
   }
 }
 
@@ -372,4 +375,53 @@ body, html, #root {
   .package-content p {
     font-size: 13px;
   }
+}
+
+/* ================= INPUT BOX FULL WIDTH ================= */
+
+.input-box {
+  position: relative;
+  width: 100%;      /* full width inside booking card */
+  margin-bottom: 10px;
+}
+
+.input-box input {
+  width: 100%;       /* full width */
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;  /* include padding in width */
+}
+
+.input-box input:focus {
+  border-color: #0076CB;
+}
+
+/* ================= SUGGESTIONS ================= */
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;       /* match input width */
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;  /* remove double border */
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
 }

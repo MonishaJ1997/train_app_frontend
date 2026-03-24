@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Holiday.css";
 import BannerSlider from "./BannerSlider";
+
 const BASE_URL = "http://127.0.0.1:8000";
+
 const Holiday = () => {
   const [banners, setBanners] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
@@ -12,7 +14,7 @@ const Holiday = () => {
     email: "",
     phone: "",
     service: "",
-    message: ""
+    message: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -22,33 +24,33 @@ const Holiday = () => {
     {
       question: "How can I book an IRCTC tour package?",
       answer:
-        "Book the best tour packages easily on IRCTC’s official website. Click on ‘Holidays’ on the homepage and select ‘Packages’. Then choose from land, air, and rail tour packages."
+        "Book the best tour packages easily on IRCTC’s official website. Click on ‘Holidays’ on the homepage and select ‘Packages’. Then choose from land, air, and rail tour packages.",
     },
     {
       question: "What does a tour package include?",
       answer:
-        "Tour packages typically include travel, accommodation, sightseeing, meals, and transfers depending on the selected plan."
+        "Tour packages typically include travel, accommodation, sightseeing, meals, and transfers depending on the selected plan.",
     },
     {
       question: "How can I book a hotel through IRCTC?",
       answer:
-        "Visit the hotel booking section on the IRCTC website and choose your preferred destination and dates."
+        "Visit the hotel booking section on the IRCTC website and choose your preferred destination and dates.",
     },
     {
       question: "How can I book my retiring room in IRCTC?",
       answer:
-        "Retiring rooms can be booked online through the IRCTC website under the accommodation section."
+        "Retiring rooms can be booked online through the IRCTC website under the accommodation section.",
     },
     {
       question: "Some famous religious IRCTC tour packages?",
       answer:
-        "Char Dham Yatra, Vaishno Devi Tour, Shirdi Tour, and Tirupati Balaji Darshan are popular religious packages."
+        "Char Dham Yatra, Vaishno Devi Tour, Shirdi Tour, and Tirupati Balaji Darshan are popular religious packages.",
     },
     {
       question: "How do I book domestic and international packages?",
       answer:
-        "Visit the IRCTC Holidays section and choose domestic or international packages as per your preference."
-    }
+        "Visit the IRCTC Holidays section and choose domestic or international packages as per your preference.",
+    },
   ];
 
   // ------------------ FETCH BANNERS ------------------
@@ -67,25 +69,39 @@ const Holiday = () => {
   const validate = () => {
     let newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = "Name is required";
+    // ✅ Name validation: letters and spaces only
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.name.trim())) {
+      newErrors.name = "Name can only contain letters and spaces";
+    }
 
+    // ✅ Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Enter valid email";
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = "Enter a valid email address";
     }
 
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!formData.phone) {
+    // ✅ Phone validation: 10 digits starting with 6-9
+    const phoneRegex = /^[6-9][0-9]{9}$/;
+    if (!formData.phone.trim()) {
       newErrors.phone = "Phone is required";
-    } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Enter valid 10 digit phone";
+    } else if (!phoneRegex.test(formData.phone.trim())) {
+      newErrors.phone =
+        "Phone must be 10 digits and start with 6, 7, 8, or 9";
     }
 
-    if (!formData.service) newErrors.service = "Please select a service";
-    if (!formData.message.trim())
+    // ✅ Service selection
+    if (!formData.service) {
+      newErrors.service = "Please select a service";
+    }
+
+    // ✅ Message validation
+    if (!formData.message.trim()) {
       newErrors.message = "Query message is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -100,7 +116,7 @@ const Holiday = () => {
         email: "",
         phone: "",
         service: "",
-        message: ""
+        message: "",
       });
       setErrors({});
     }
@@ -189,7 +205,9 @@ const Holiday = () => {
                 <option value="International Tour">International Tour</option>
                 <option value="Honeymoon Package">Honeymoon Package</option>
               </select>
-              {errors.service && <span className="error">{errors.service}</span>}
+              {errors.service && (
+                <span className="error">{errors.service}</span>
+              )}
             </div>
           </div>
 
@@ -201,7 +219,9 @@ const Holiday = () => {
               value={formData.message}
               onChange={handleChange}
             />
-            {errors.message && <span className="error">{errors.message}</span>}
+            {errors.message && (
+              <span className="error">{errors.message}</span>
+            )}
           </div>
 
           <div className="button-container">
@@ -234,9 +254,7 @@ const Holiday = () => {
               </div>
 
               {activeIndex === index && (
-                <div className="faq-answer">
-                  {item.answer}
-                </div>
+                <div className="faq-answer">{item.answer}</div>
               )}
             </div>
           ))}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Ticket.css";
-import jwt_decode from "jwt-decode"; // ONLY this line // for ESM style // ✅ Vite fix
+import jwt_decode from "jwt-decode"; // For decoding JWT token
+import { PiTextAlignCenter } from "react-icons/pi";
 
 const BASE_URL = "http://127.0.0.1:8000";
 
@@ -8,20 +9,23 @@ const Tickets = ({ logo }) => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
+    // Get current user
     const token = localStorage.getItem("token");
+    let currentUser = "guest";
 
-    let currentUser = null;
     if (token) {
       try {
-        const decoded = jwt_decode(token); // ✅ Notice .default
-        currentUser = decoded.username; // make sure your token has username
+        const decoded = jwt_decode(token);
+        currentUser = decoded.username || "guest";
       } catch (err) {
         console.log("Invalid token", err);
       }
     }
 
+    // Get all bookings from localStorage
     const stored = JSON.parse(localStorage.getItem("bookings")) || [];
 
+    // Filter tickets for current user
     const userTickets = stored.filter((t) => t.username === currentUser);
 
     setTickets(userTickets);
@@ -29,7 +33,7 @@ const Tickets = ({ logo }) => {
 
   if (tickets.length === 0) {
     return (
-      <p style={{ textAlign: "center", marginTop: "200px" }}>
+      <p style={{ textAlign: "center", marginTop: "100px",marginBottom:"100px" }}>
         You have no booked tickets yet.
       </p>
     );
@@ -39,6 +43,7 @@ const Tickets = ({ logo }) => {
     <div className="tickets-page">
       {tickets.map((t, index) => (
         <div className="ticket-card" key={index}>
+          {/* LEFT SIDE */}
           <div className="ticket-left">
             <div className="ticket-top">
               <div className="train-img">
@@ -57,31 +62,44 @@ const Tickets = ({ logo }) => {
               <div>
                 <div className="ticket-title">TRAIN TICKET</div>
                 <p>
-                  <strong>Name:</strong> {t.passengers?.[0]?.name || "N/A"}
+                  <strong>Name:</strong>{" "}
+                  {t.passengers?.[0]?.name || "N/A"}
                 </p>
                 <p>
-                  <strong>Date:</strong> {new Date().toLocaleDateString()}
+                  <strong>Date:</strong>{" "}
+                  {new Date().toLocaleDateString()}
                 </p>
               </div>
             </div>
 
             <div className="ticket-info">
-              <p><strong>Train:</strong> {t.train_name || "Unknown"}</p>
-              <p><strong>Seat:</strong> {t.seat || "B6"}</p>
-              <p><strong>Class:</strong> {t.classType || "General"}</p>
-              <p><strong>Mobile:</strong> {t.mobile || "N/A"}</p>
+              <p>
+                <strong>Train:</strong> {t.train_name || "Unknown"}
+              </p>
+              <p>
+                <strong>Seat:</strong> {t.seat || "B6"}
+              </p>
+              <p>
+                <strong>Class:</strong> {t.classType || "General"}
+              </p>
+              <p>
+                <strong>Mobile:</strong> {t.mobile || "N/A"}
+              </p>
             </div>
 
             <div className="ticket-bottom">
               <p>
-                <strong>Route:</strong> {t.source || "Unknown"} → {t.destination || "Unknown"}
+                <strong>Route:</strong> {t.source || "Unknown"} →{" "}
+                {t.destination || "Unknown"}
               </p>
             </div>
           </div>
 
+          {/* RIGHT SIDE */}
           <div className="ticket-right">
             <div className="ticket-number">
-              TICKET NUMBER <strong>{Math.floor(Math.random() * 1000000)}</strong>
+              TICKET NUMBER{" "}
+              <strong>{Math.floor(Math.random() * 1000000)}</strong>
             </div>
             <div className="price">
               <span>PRICE</span>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import LoginModal from "./LoginModal";
 import "./TrainDetails.css";
 
 const BASE_URL = "http://127.0.0.1:8000";
@@ -10,7 +11,8 @@ const TrainDetails = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeDate, setActiveDate] = useState(0);
-  const [loginWarnings, setLoginWarnings] = useState({}); // per train
+  const [loginModal, setLoginModal] = useState(false);
+  const [user, setUser] = useState(localStorage.getItem("username") || null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,6 +21,21 @@ const TrainDetails = () => {
   const from = query.get("from");
   const to = query.get("to");
 
+  // ================= DYNAMIC DATE STRIP =================
+  const getNextDays = (numDays = 5) => {
+    const days = [];
+    const options = { weekday: "short", day: "2-digit" };
+    for (let i = 0; i <= numDays; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      const formatted = d.toLocaleDateString("en-US", options).replace(",", "");
+      days.push(formatted);
+    }
+    return days;
+  };
+  const dateList = getNextDays(5);
+
+  // ================= FETCH TRAINS =================
   useEffect(() => {
     setLoading(true);
     axios
@@ -28,10 +45,13 @@ const TrainDetails = () => {
       .finally(() => setLoading(false));
   }, [from, to]);
 
+  // ================= HANDLE BOOK =================
   const handleBookNow = (train) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // logged in → navigate
+    if (user) {
+      if (!selectedOption) {
+        alert("Please select a class first");
+        return;
+      }
       navigate("/booking", {
         state: {
           train,
@@ -40,32 +60,37 @@ const TrainDetails = () => {
         },
       });
     } else {
-      // not logged in → show warning for this train
-      setLoginWarnings((prev) => ({ ...prev, [train.id]: true }));
-      // auto-hide warning after 3s
-      setTimeout(() => {
-        setLoginWarnings((prev) => ({ ...prev, [train.id]: false }));
-      }, 3000);
+      setLoginModal(true);
     }
+  };
+
+  const handleLoginSuccess = (username) => {
+    localStorage.setItem("username", username);
+    localStorage.setItem("access", "true"); // optional token
+    setUser(username);
+    setLoginModal(false);
+    window.dispatchEvent(new Event("user-logged-in"));
   };
 
   return (
     <div className="train-page">
       {/* HEADER */}
       <div className="train-header-top">
-        <h2>{from} to {to} Trains</h2>
-        <p>{trains.length} Trains found</p>
+        <h2>
+          {from} → {to} Trains
+        </h2>
+        {!loading && trains.length > 0 && <p>{trains.length} Trains found</p>}
       </div>
 
       {/* DATE STRIP */}
       <div className="date-strip">
-        {["Fri 27", "Sat 28", "Sun 01", "Mon 02", "Tue 03"].map((d, i) => (
+        {dateList.map((d, i) => (
           <div
             key={i}
             className={`date-box ${activeDate === i ? "active" : ""}`}
             onClick={() => setActiveDate(i)}
           >
-            <span>{d}</span>
+            <span>{i === 0 ? "Today" : d}</span>
             <small className="date-status">Filling Fast</small>
           </div>
         ))}
@@ -81,22 +106,45 @@ const TrainDetails = () => {
       </div>
 
       {/* LOADING */}
-      {loading && <p>Loading trains...</p>}
-      {!loading && trains.length === 0 && <p>No trains found</p>}
+      {loading && (
+        <div className="loading-message">
+          <p>Loading trains...</p>
+        </div>
+      )}
+
+      {/* NO TRAINS AVAILABLE */}
+      {!loading && trains.length === 0 && (
+        <div className="no-trains">
+          <h3>No Trains Available</h3>
+          <p>
+            Sorry, we couldn't find any trains for your selected route and date.
+          </p>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+            alt="No trains"
+          />
+        </div>
+      )}
 
       {/* TRAIN LIST */}
       {trains.map((train) => {
-        const isSelected = selectedOption?.train.id === train.id;
+        const isSelected = selectedOption?.train?.id === train.id;
         return (
           <div className="train-card" key={train.id}>
             {/* TOP ROW */}
             <div className="train-row-top">
               <div>
-                <h4 className="bold">{train.train_number} {train.train_name}</h4>
+                <h4 className="bold">
+                  {train.train_number} {train.train_name}
+                </h4>
                 <div className="train-time">
-                  <span className="time">{train.departure_time} {train.source}</span>
+                  <span className="time">
+                    {train.departure_time} {train.source}
+                  </span>
                   <span className="duration">• 19h 55m •</span>
-                  <span className="time">{train.arrival_time} {train.destination}</span>
+                  <span className="time">
+                    {train.arrival_time} {train.destination}
+                  </span>
                 </div>
               </div>
               <div
@@ -111,7 +159,9 @@ const TrainDetails = () => {
             <div className="availability-row">
               <div
                 className="av-card green"
-                onClick={() => setSelectedOption({ train, classType: "SL", price: 655 })}
+                onClick={() =>
+                  setSelectedOption({ train, classType: "SL", price: 655 })
+                }
               >
                 <p className="class">SL</p>
                 <p className="price">₹655</p>
@@ -119,7 +169,9 @@ const TrainDetails = () => {
               </div>
               <div
                 className="av-card red"
-                onClick={() => setSelectedOption({ train, classType: "3A", price: 1670 })}
+                onClick={() =>
+                  setSelectedOption({ train, classType: "3A", price: 1670 })
+                }
               >
                 <p className="class">3A</p>
                 <p className="price">₹1670</p>
@@ -127,7 +179,9 @@ const TrainDetails = () => {
               </div>
               <div
                 className="av-card green"
-                onClick={() => setSelectedOption({ train, classType: "2A", price: 2200 })}
+                onClick={() =>
+                  setSelectedOption({ train, classType: "2A", price: 2200 })
+                }
               >
                 <p className="class">2A</p>
                 <p className="price">₹2200</p>
@@ -144,18 +198,19 @@ const TrainDetails = () => {
                 >
                   Book Now
                 </button>
-
-                {/* LOGIN WARNING */}
-                {loginWarnings[train.id] && (
-                  <p className="login-warning" style={{ color: "red", marginTop: "10px" }}>
-                    Please login first to book tickets
-                  </p>
-                )}
               </div>
             )}
           </div>
         );
       })}
+
+      {/* LOGIN MODAL */}
+      {loginModal && (
+        <LoginModal
+          onClose={() => setLoginModal(false)}
+          onLogin={handleLoginSuccess}
+        />
+      )}
     </div>
   );
 };

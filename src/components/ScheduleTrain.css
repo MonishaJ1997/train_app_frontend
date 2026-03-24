@@ -75,3 +75,50 @@
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
+/* Medium devices (tablets) */
+@media screen and (max-width: 768px) {
+  .schedule-hero {
+    padding: 40px 15px;
+  }
+
+  .schedule-hero h1 {
+    font-size: 28px;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box input,
+  .search-box button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr; /* single column for tablets */
+  }
+}
+
+/* Small devices (mobile phones) */
+@media screen and (max-width: 480px) {
+  .schedule-hero {
+    padding: 30px 10px;
+  }
+
+  .schedule-hero h1 {
+    font-size: 24px;
+  }
+
+  .search-box input,
+  .search-box button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .info-card {
+    padding: 15px;
+    font-size: 14px;
+  }
+}

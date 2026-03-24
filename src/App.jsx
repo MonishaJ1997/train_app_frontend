@@ -16,7 +16,7 @@ import ScheduleTrain from "./components/ScheduleTrain";
 import Parcel from "./components/Parcel";
 import Station from "./components/Station"
 import Holiday from "./components/Holiday"
-
+import LoginModal from "./components/LoginModal";
 
 
 
@@ -37,6 +37,7 @@ function App() {
          <Route path="/parcel" element={<Parcel />} />
          <Route path="/station" element={<Station/>} />
           <Route path="/holiday" element={<Holiday/>} />
+          <Route path="/loginmodal" element={<LoginModal/>}/>
       </Routes>
       <Footer/>
     </Router>

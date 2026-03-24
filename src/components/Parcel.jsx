@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 import "./Parcel.css";
 
 const Parcel = () => {
+  const navigate = useNavigate(); // ✅ initialize navigate
   const [trackingId, setTrackingId] = useState("");
   const [result, setResult] = useState(null);
 
@@ -17,12 +19,26 @@ const Parcel = () => {
       status: "In Transit",
       from: "Chennai",
       to: "Bangalore",
-      expected: "2 Mar 2026",
+      expected: "29 Mar 2026",
     });
   };
 
   return (
     <div className="parcel-page">
+      {/* BACK BUTTON */}
+      <div
+        className="back-btn"
+        onClick={() => navigate(-1)}
+        style={{
+          cursor: "pointer",
+          marginBottom: "20px",
+          color: "black",
+          fontWeight: "bold",
+        }}
+      >
+        ← Back
+      </div>
+
       {/* HEADER */}
       <div className="parcel-header">
         <h1>📦 Parcel Services</h1>

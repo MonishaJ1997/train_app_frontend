@@ -57,12 +57,12 @@
 }
 
 .track-box input:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  border-color: #0076cb;
+  
 }
 
 .track-box button {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: #0076cb;
   color: white;
   border: none;
   padding: 12px 20px;

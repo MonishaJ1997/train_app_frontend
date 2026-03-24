@@ -11,48 +11,64 @@ const Navbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+
   const navigate = useNavigate();
 
-  // Fetch site logo from backend
+  // ================= FETCH LOGO =================
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/site-logo/`)
-      .then((res) => {
-        console.log("Logo API response:", res.data);
-        setLogo(res.data);
-      })
+      .then((res) => setLogo(res.data))
       .catch((err) => console.log("Logo error:", err));
   }, []);
 
-  // Check login state on mount
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedName = localStorage.getItem("username"); // optional
-    setIsLoggedIn(!!token);
-    if (storedName) setUsername(storedName);
-  }, []);
+  // ================= CHECK LOGIN =================
+  const checkLogin = () => {
+    const token = localStorage.getItem("access");
+    const storedName = localStorage.getItem("username");
 
-  // Handle logout
+    if (token && storedName) {
+      setIsLoggedIn(true);
+      setUsername(storedName);
+    } else {
+      setIsLoggedIn(false);
+      setUsername("");
+    }
+  };
+
+ useEffect(() => {
+  checkLogin(); // initial check
+
+  const handleStorageChange = () => checkLogin();
+  const handleUserLogin = () => checkLogin(); // listens to custom event
+
+  window.addEventListener("storage", handleStorageChange);
+  window.addEventListener("user-logged-in", handleUserLogin);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+    window.removeEventListener("user-logged-in", handleUserLogin);
+  };
+}, []);
+  
+
+  // ================= LOGOUT =================
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear();
     setIsLoggedIn(false);
     setUsername("");
+    alert("✅ Logged out successfully");
+    navigate("/");
   };
 
   return (
     <>
-      {/* ================= NAVBAR ================= */}
       <div className="navbar">
-        {/* LEFT SIDE */}
+        {/* LEFT */}
         <div className="nav-left">
           {logo?.logo && (
             <img
-              src={
-                logo.logo.startsWith("http")
-                  ? logo.logo
-                  : `${BASE_URL}${logo.logo}`
-              }
+              src={logo.logo.startsWith("http") ? logo.logo : `${BASE_URL}${logo.logo}`}
               alt="logo"
               className="logo-img"
             />
@@ -60,35 +76,30 @@ const Navbar = () => {
           <h2 className="logo-text">E-Track</h2>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT */}
         <div className="nav-right">
-          <button 
-  className="nav-btn"
-  onClick={() => navigate("/")}
->
-  Home
-</button>
+          <button className="nav-btn" onClick={() => navigate("/")}>
+            Home
+          </button>
+
           {isLoggedIn ? (
             <>
               <button className="nav-btn username-btn">
-  {username || "User"}
-</button>
+                👤 {username || "User"}
+              </button>
               <button className="nav-btn login-btn" onClick={handleLogout}>
                 Logout
               </button>
             </>
           ) : (
-            <button
-              className="nav-btn login-btn"
-              onClick={() => setShowLogin(true)}
-            >
+            <button className="login-btn" onClick={() => setShowLogin(true)}>
               Login
             </button>
           )}
         </div>
       </div>
 
-      {/* ================= RUNNING ANNOUNCEMENT LINE ================= */}
+      {/* RUNNING TEXT */}
       <div className="running-line">
         <div className="running-text">
           🚆 Book Tickets Fast • 🎫 Special Offers Available •
@@ -97,14 +108,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ================= LOGIN MODAL ================= */}
+      {/* LOGIN MODAL */}
       {showLogin && (
         <LoginModal
           onClose={() => setShowLogin(false)}
-          logo={logo}
           onLogin={(name) => {
+            localStorage.setItem("username", name);
+            localStorage.setItem("access", "true"); // token placeholder
             setIsLoggedIn(true);
-            if (name) setUsername(name);
+            setUsername(name);
+            setShowLogin(false);
           }}
         />
       )}

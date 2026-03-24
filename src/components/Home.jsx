@@ -3,7 +3,6 @@ import axios from "axios";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
-
 const BASE_URL = "http://127.0.0.1:8000";
 
 const Home = () => {
@@ -12,45 +11,79 @@ const Home = () => {
   // 🔹 States
   const [banner, setBanner] = useState(null);
   const [banners, setBanners] = useState([]);
+  const [packages, setPackages] = useState([]);
+
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+
+  const [fromSuggestions, setFromSuggestions] = useState([]);
+  const [toSuggestions, setToSuggestions] = useState([]);
+
   const [quota, setQuota] = useState("GENERAL");
   const [travelClass, setTravelClass] = useState("All Classes");
   const [passengers, setPassengers] = useState("1 Passenger");
-  const [packages, setPackages] = useState([]);
+
+  // 🔹 STATIC STATIONS (can replace with API later)
+  const stations = [
+    "Chennai",
+    "Coimbatore",
+    "Bangalore",
+    "Hyderabad",
+    "Mumbai",
+    "Delhi",
+    "Madurai",
+    "Trichy",
+    "Salem",
+    "Kanyakumari",
+    "Nagercoil",
+    "Tiruvandrum",
+    "Rameswaram",
+    "Guruvayur",
+  ];
 
   // 🔹 Fetch data
   useEffect(() => {
-    // HERO banner
-    axios
-      .get(`${BASE_URL}/api/train-banner/`)
+    axios.get(`${BASE_URL}/api/train-banner/`)
       .then((res) => {
-        console.log("Banner DATA:", res.data);
-        if (res.data.length > 0) {
-          setBanner(res.data[0]);
-        }
+        if (res.data.length > 0) setBanner(res.data[0]);
       })
-      .catch((err) => {
-        console.log("Banner ERROR:", err);
-      });
+      .catch((err) => console.log(err));
 
-    // Bottom banners
-    axios
-      .get(`${BASE_URL}/api/banners/`)
-      .then((res) => {
-        setBanners(res.data);
-      })
-      .catch((err) => console.error(err));
+    axios.get(`${BASE_URL}/api/banners/`)
+      .then((res) => setBanners(res.data))
+      .catch((err) => console.log(err));
 
-
-
-       axios
-      .get(`${BASE_URL}/api/packages/`)
-      .then((res) => {
-        setPackages(res.data);
-      })
-      .catch((err) => console.error(err));
+    axios.get(`${BASE_URL}/api/packages/`)
+      .then((res) => setPackages(res.data))
+      .catch((err) => console.log(err));
   }, []);
+
+  // 🔹 Autocomplete handlers
+  const handleFromChange = (value) => {
+    setFrom(value);
+
+    if (value.length > 0) {
+      const filtered = stations.filter((item) =>
+        item.toLowerCase().includes(value.toLowerCase())
+      );
+      setFromSuggestions(filtered);
+    } else {
+      setFromSuggestions([]);
+    }
+  };
+
+  const handleToChange = (value) => {
+    setTo(value);
+
+    if (value.length > 0) {
+      const filtered = stations.filter((item) =>
+        item.toLowerCase().includes(value.toLowerCase())
+      );
+      setToSuggestions(filtered);
+    } else {
+      setToSuggestions([]);
+    }
+  };
 
   // 🔍 Search handler
   const handleSearch = () => {
@@ -66,7 +99,8 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* ================= HERO SECTION ================= */}
+
+      {/* ================= HERO ================= */}
       <div
         className="hero-section"
         style={{
@@ -76,31 +110,63 @@ const Home = () => {
         }}
       >
         <div className="hero-overlay">
-          {/* BOOKING CARD */}
           <div className="booking-card">
             <h2>BOOK TICKET</h2>
 
             {/* FROM */}
-            <input
-              type="text"
-              placeholder="From"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-            />
+            <div className="input-box">
+              <input
+                type="text"
+                placeholder="From"
+                value={from}
+                onChange={(e) => handleFromChange(e.target.value)}
+              />
+
+              {fromSuggestions.length > 0 && (
+                <ul className="suggestions">
+                  {fromSuggestions.map((item, i) => (
+                    <li
+                      key={i}
+                      onClick={() => {
+                        setFrom(item);
+                        setFromSuggestions([]);
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             {/* TO */}
-            <input
-              type="text"
-              placeholder="To"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-            />
+            <div className="input-box">
+              <input
+                type="text"
+                placeholder="To"
+                value={to}
+                onChange={(e) => handleToChange(e.target.value)}
+              />
+
+              {toSuggestions.length > 0 && (
+                <ul className="suggestions">
+                  {toSuggestions.map((item, i) => (
+                    <li
+                      key={i}
+                      onClick={() => {
+                        setTo(item);
+                        setToSuggestions([]);
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             {/* QUOTA */}
-            <select
-              value={quota}
-              onChange={(e) => setQuota(e.target.value)}
-            >
+            <select value={quota} onChange={(e) => setQuota(e.target.value)}>
               <option>GENERAL</option>
               <option>TATKAL</option>
               <option>LADIES</option>
@@ -127,7 +193,6 @@ const Home = () => {
               </select>
             </div>
 
-            {/* SEARCH BUTTON */}
             <button className="book-btn" onClick={handleSearch}>
               Search
             </button>
@@ -135,8 +200,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ================= SERVICES SECTION ================= */}
-      <div className="services-container">
+      {/* ================= SERVICES ================= */}
+       <div className="services-container">
         
 
         <div
@@ -173,48 +238,46 @@ const Home = () => {
         </div>*/}
       </div>
 
-      {/* ================= BOTTOM BANNERS ================= */}
+      
+
+      {/* ================= BANNERS ================= */}
       <div className="banner-container">
         {banners.length > 0 ? (
           banners.map((item) => (
             <img
               key={item.id}
               src={item.image}
-              alt="train banner"
+              alt="banner"
               className="banner-image"
             />
           ))
         ) : (
-          <p style={{ textAlign: "center" }}>No banners available</p>
+          <p>No banners available</p>
         )}
       </div>
-    
 
+      {/* ================= PACKAGES ================= */}
+      <div className="package-container">
+        {packages.map((item) => (
+          <div className="package-card" key={item.id}>
+            <img src={item.image} alt={item.title} />
+            <div className="package-content">
+              <h2>{item.title}</h2>
+              <p>{item.short_description}</p>
 
-
-
- <div className="package-container">
-      {packages.map((item) => (
-        <div className="package-card" key={item.id}>
-          <img src={item.image} alt={item.title} />
-          <div className="package-content">
-            <h2>{item.title}</h2>
-            <p>{item.short_description}</p>
-            <button
-  onClick={() =>
-    navigate("/holiday", { state: { packageData: item } })
-  }
->
-  Read More →
-</button>
+              <button
+                onClick={() =>
+                  navigate("/holiday", { state: { packageData: item } })
+                }
+              >
+                Read More →
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
     </div>
-    </div>
-
-
-
   );
 };
 
