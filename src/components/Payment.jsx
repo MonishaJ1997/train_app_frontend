@@ -113,6 +113,9 @@ const CheckoutForm = ({ bookingData }) => {
         </form>
 
         <p className="secure-info">🔒 Secure Payment | Stripe Protected</p>
+        <p className="test-info">
+          ⚠️ Use Stripe test card: 4242 4242 4242 4242 | Any future expiry | Any CVC
+        </p>
       </div>
     </div>
   );
