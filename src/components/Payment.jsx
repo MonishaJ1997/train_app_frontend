@@ -6,7 +6,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import "./Payment.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const CheckoutForm = ({ bookingData }) => {
