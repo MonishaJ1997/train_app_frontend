@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import "./TrainDetails.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const TrainDetails = () => {
   const [trains, setTrains] = useState([]);
