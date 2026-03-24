@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./LoginModal.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const LoginModal = ({ onClose, onLogin }) => {
   const [view, setView] = useState("login");
