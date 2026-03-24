@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Station.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://train-app-backend-cdpt.onrender.com";
 
 const Station = () => {
   const [stations, setStations] = useState([]);
